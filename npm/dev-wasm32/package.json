@@ -1,13 +1,13 @@
 {
-  "name": "@img/sharp-libvips-linux-x64",
+  "name": "@img/sharp-libvips-dev-wasm32",
   "version": "1.2.6",
-  "description": "Prebuilt libvips and dependencies for use with sharp on Linux (glibc) x64",
+  "description": "Header files and static wasm32 libraries for libvips and dependencies to build sharp as wasm32",
   "author": "Lovell Fuller <npm@lovell.info>",
   "homepage": "https://sharp.pixelplumbing.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lovell/sharp-libvips.git",
-    "directory": "npm/linux-x64"
+    "directory": "npm/dev-wasm32"
   },
   "license": "LGPL-3.0-or-later",
   "funding": {
@@ -18,25 +18,14 @@
     "access": "public"
   },
   "files": [
+    "include",
     "lib",
     "versions.json"
   ],
   "type": "commonjs",
   "exports": {
+    "./include": "./include/index.js",
     "./lib": "./lib/index.js",
-    "./package": "./package.json",
     "./versions": "./versions.json"
-  },
-  "config": {
-    "glibc": ">=2.26"
-  },
-  "os": [
-    "linux"
-  ],
-  "libc": [
-    "glibc"
-  ],
-  "cpu": [
-    "x64"
-  ]
+  }
 }
