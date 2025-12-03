@@ -6,9 +6,9 @@
     "dev",
     "darwin-x64",
     "darwin-arm64",
-    "linux-arm",
     "linux-arm64",
     "linux-x64",
+    "linux-sse2-x64",
     "win32-x64"
   ]
 }

@@ -12,7 +12,7 @@ if [ $# -lt 1 ]; then
   echo "Possible values for PLATFORM are:"
   echo "- win32-x64"
   echo "- linux-x64"
-  echo "- linux-armv6"
+  echo "- linux-sse2-x64"
   echo "- linux-arm64v8"
   echo "- darwin-x64"
   echo "- darwin-arm64v8"
@@ -75,8 +75,8 @@ for flavour in win32-x64; do
   fi
 done
 
-# Linux (x64, ARMv6, ARM64v8)
-for flavour in linux-x64 linux-armv6 linux-arm64v8; do
+# Linux (x64, x64 with sse2, ARM64v8)
+for flavour in linux-x64 linux-sse2-x64 linux-arm64v8; do
   if [ $PLATFORM = "all" ] || [ $PLATFORM = $flavour ]; then
     echo "Building $flavour..."
     docker build --pull -t vips-dev-$flavour platforms/$flavour

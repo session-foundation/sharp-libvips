@@ -53,20 +53,16 @@ remove_unused() {
 }
 
 # Download and extract per-platform binaries
-# FIXME enable this back
 PLATFORMS=$(ls platforms --ignore=win32*)
-# PLATFORMS=$(ls platforms -Iwin* -Idarwin* -Ilinux-arm*)
 for platform in $PLATFORMS; do
   extract "$platform"
 done
-# FIXME enable this back
 for platform in x64; do
   extract "win32-$platform"
 done
 
 # Common header and source files
 cp -r npm/linux-x64/{include,versions.json,THIRD-PARTY-NOTICES.md} npm/dev/
-# FIXME enable this back
 cp -r npm/win32-x64/include npm/dev/
 find npm/dev/include/ -maxdepth 1 -type f -links +1 -delete
 for source in VConnection VError VImage VInterpolate VRegion vips-operators; do
@@ -76,10 +72,6 @@ done;
 # Generate README files
 PACKAGES=$(jq -r '.workspaces[]' "npm/package.json")
 for package in $PACKAGES; do
-  # FIXME enable this back
-  # if [[ "$package" != "linux-x64" && "$package" != "dev" ]]; then
-  #   continue
-  # fi
   generate_readme "$package"
   generate_index "$package"
   remove_unused "$package"

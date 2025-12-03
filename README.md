@@ -18,7 +18,7 @@ One [build script](build/posix.sh) is used to (cross-)compile
 the same shared libraries within multiple containers.
 
 - [x64 glibc](platforms/linux-x64/Dockerfile)
-- [ARMv6 glibc](platforms/linux-armv6/Dockerfile)
+- [x64 sse2 glibc](platforms/linux-sse2-x64/Dockerfile)
 - [ARM64v8-A glibc](platforms/linux-arm64v8/Dockerfile)
 
 ### Windows
