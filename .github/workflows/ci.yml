@@ -17,7 +17,7 @@ jobs:
     permissions:
       contents: read
     name: build-${{ matrix.platform }}
-    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
     needs: check-latest-versions
     strategy:
       fail-fast: false
@@ -34,7 +34,7 @@ jobs:
           pipx install meson
           brew install automake nasm
       - name: Build ${{ matrix.platform }}
-        run: ./build.sh ${{ matrix.platform }}
+        run: nice ionice ./build.sh ${{ matrix.platform }}
       - name: Upload ${{ matrix.platform }} artifact
         uses: actions/upload-artifact@v4
         with:
