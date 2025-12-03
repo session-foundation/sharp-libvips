@@ -10,20 +10,12 @@ if [ $# -lt 1 ]; then
   echo "Build shared libraries for libvips and its dependencies"
   echo
   echo "Possible values for PLATFORM are:"
-  echo "- win32-ia32"
   echo "- win32-x64"
-  echo "- win32-arm64v8"
   echo "- linux-x64"
-  echo "- linuxmusl-x64"
   echo "- linux-armv6"
   echo "- linux-arm64v8"
-  echo "- linuxmusl-arm64v8"
-  echo "- linux-ppc64le"
-  echo "- linux-riscv64"
-  echo "- linux-s390x"
   echo "- darwin-x64"
   echo "- darwin-arm64v8"
-  echo "- dev-wasm32"
   echo
   exit 1
 fi
@@ -80,7 +72,7 @@ if [ "$PLATFORM" == "dev-wasm32" ]; then
 fi
 
 # Windows
-for flavour in win32-ia32 win32-x64 win32-arm64v8; do
+for flavour in win32-x64; do
   if [ $PLATFORM = "all" ] || [ $PLATFORM = $flavour ]; then
     echo "Building $flavour..."
     docker build --pull -t vips-dev-win32 platforms/win32
@@ -89,7 +81,7 @@ for flavour in win32-ia32 win32-x64 win32-arm64v8; do
 done
 
 # Linux (x64, ARMv6, ARM64v8)
-for flavour in linux-x64 linuxmusl-x64 linux-armv6 linux-arm64v8 linuxmusl-arm64v8 linux-ppc64le linux-riscv64 linux-s390x; do
+for flavour in linux-x64 linux-armv6 linux-arm64v8; do
   if [ $PLATFORM = "all" ] || [ $PLATFORM = $flavour ]; then
     echo "Building $flavour..."
     docker build --pull -t vips-dev-$flavour platforms/$flavour
