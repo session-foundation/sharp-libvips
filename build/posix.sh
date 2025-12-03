@@ -498,6 +498,7 @@ ls -al lib
 rm -rf lib
 mv lib-filtered lib
 tar chzf ${PACKAGE}/sharp-libvips-${PLATFORM}.tar.gz \
+  --hard-dereference \
   include \
   lib \
   *.json \
