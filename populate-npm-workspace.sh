@@ -59,13 +59,6 @@ for platform in $PLATFORMS; do
 done
 
 
-# Common header and source files
-cp -r npm/linux-x64/{include,versions.json,THIRD-PARTY-NOTICES.md} npm/dev/
-cp -r npm/win32-x64/include npm/dev/
-find npm/dev/include/ -maxdepth 1 -type f -links +1 -delete
-for source in VConnection VError VImage VInterpolate VRegion vips-operators; do
-  download_cpp "$source"
-done;
 
 # Generate README files
 PACKAGES=$(jq -r '.workspaces[]' "npm/package.json")
