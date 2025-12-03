@@ -4,7 +4,7 @@ libvips and its dependencies are provided as pre-compiled shared libraries
 for the most common operating systems and CPU architectures.
 
 These are [packaged](npm) and published to the npm registry under the
-[@img](https://www.npmjs.com/org/img) organisation.
+[@session-foundation-test](https://www.npmjs.com/org/session-foundation-test) organisation.
 
 ## Creating a tarball
 
