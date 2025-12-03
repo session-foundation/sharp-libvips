@@ -24,6 +24,7 @@ case ${PLATFORM} in
     PACKAGE=/packaging
     ROOT=/root
     VIPS_CPP_DEP=libvips-cpp.so.$(without_prerelease $VERSION_VIPS)
+    VIPS_CPP_STATIC_DEP=libvips-cpp.a.$(without_prerelease $VERSION_VIPS)
     ;;
   darwin*)
     DARWIN=true
@@ -32,6 +33,7 @@ case ${PLATFORM} in
     PACKAGE=$PWD
     ROOT=$PWD/platforms/$PLATFORM
     VIPS_CPP_DEP=libvips-cpp.$(without_prerelease $VERSION_VIPS).dylib
+    VIPS_CPP_STATIC_DEP=libvips-cpp.$(without_prerelease $VERSION_VIPS).a
     ;;
 esac
 
@@ -382,9 +384,10 @@ if [ "$LINUX" = true ]; then
   # See: https://github.com/lovell/sharp/issues/2535#issuecomment-766400693
   printf "{local:g_param_spec_types;};" > vips.map
 fi
+
 # Disable building man pages, gettext po files, tools, and (fuzz-)tests
 sed -i'.bak' "/subdir('man')/{N;N;N;N;d;}" meson.build
-CFLAGS="${CFLAGS} -O3" CXXFLAGS="${CXXFLAGS} -O3" meson setup _build --default-library=shared --buildtype=release --strip --prefix=${TARGET} ${MESON} \
+CFLAGS="${CFLAGS} -O3" CXXFLAGS="${CXXFLAGS} -O3" meson setup _build --default-library=both --buildtype=release --strip --prefix=${TARGET} ${MESON} \
   -Ddeprecated=false -Dexamples=false -Dintrospection=disabled -Dmodules=disabled -Dcfitsio=disabled -Dfftw=disabled -Djpeg-xl=disabled \
   ${WITHOUT_HIGHWAY:+-Dhighway=disabled} -Dorc=disabled -Dmagick=disabled -Dmatio=disabled -Dnifti=disabled -Dopenexr=disabled \
   -Dopenjpeg=disabled -Dopenslide=disabled -Dpdfium=disabled -Dpoppler=disabled -Dquantizr=disabled \
@@ -438,7 +441,17 @@ if [ "$LINUX" = true ]; then
   # Check that we really linked with -z nodelete
   readelf -Wd ${VIPS_CPP_DEP} | grep -qF NODELETE || (echo "$VIPS_CPP_DEP was not linked with -z nodelete" && exit 1)
 fi
+
+cat > ${VIPS_CPP_STATIC_DEP}.mri <<EOF
+CREATE ${VIPS_CPP_STATIC_DEP}
+$(find . -maxdepth 1 -name '*.a' -exec basename {} \; | sort | sed 's/^/ADDLIB /')
+SAVE
+END
+EOF
+ar -M <${VIPS_CPP_STATIC_DEP}.mri
+
 copydeps ${VIPS_CPP_DEP} ${TARGET}/lib-filtered
+copydeps ${VIPS_CPP_STATIC_DEP} ${TARGET}/lib-filtered
 
 # Create JSON file of version numbers
 cd ${TARGET}
