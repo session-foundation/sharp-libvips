@@ -172,7 +172,7 @@ mkdir ${DEPS}/lcms
 $CURL https://github.com/mm2/Little-CMS/releases/download/lcms${VERSION_LCMS}/lcms2-${VERSION_LCMS}.tar.gz | tar xzC ${DEPS}/lcms --strip-components=1
 cd ${DEPS}/lcms
 CFLAGS="${CFLAGS} -O3" meson setup _build --default-library=static --buildtype=release --strip --prefix=${TARGET} ${MESON} \
-  -Dtests=disabled 
+  -Dtests=disabled
 meson install -C _build --tag devel
 
 mkdir ${DEPS}/aom
@@ -442,16 +442,21 @@ if [ "$LINUX" = true ]; then
   readelf -Wd ${VIPS_CPP_DEP} | grep -qF NODELETE || (echo "$VIPS_CPP_DEP was not linked with -z nodelete" && exit 1)
 fi
 
-cat > ${VIPS_CPP_STATIC_DEP}.mri <<EOF
+copydeps ${VIPS_CPP_DEP} ${TARGET}/lib-filtered
+
+if [ "$LINUX" = true ]; then
+    cat > ${VIPS_CPP_STATIC_DEP}.mri <<EOF
 CREATE ${VIPS_CPP_STATIC_DEP}
 $(find . -maxdepth 1 -name '*.a' -exec basename {} \; | sort | sed 's/^/ADDLIB /')
 SAVE
 END
 EOF
 ar -M <${VIPS_CPP_STATIC_DEP}.mri
-
-copydeps ${VIPS_CPP_DEP} ${TARGET}/lib-filtered
 copydeps ${VIPS_CPP_STATIC_DEP} ${TARGET}/lib-filtered
+
+fi
+
+
 
 # Create JSON file of version numbers
 cd ${TARGET}
