@@ -65,11 +65,6 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
-# WebAssembly
-if [ "$PLATFORM" == "dev-wasm32" ]; then
-  ./build/wasm.sh
-  exit 0
-fi
 
 # Windows
 for flavour in win32-x64; do

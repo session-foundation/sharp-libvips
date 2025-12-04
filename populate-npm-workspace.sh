@@ -60,7 +60,6 @@ done
 for platform in x64; do
   extract "win32-$platform"
 done
-extract "dev-wasm32"
 
 # Common header and source files
 cp -r npm/linux-x64/{include,versions.json,THIRD-PARTY-NOTICES.md} npm/dev/
