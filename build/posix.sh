@@ -497,12 +497,22 @@ $CURL -O https://raw.githubusercontent.com/lovell/sharp-libvips/main/THIRD-PARTY
 ls -al lib
 rm -rf lib
 mv lib-filtered lib
-tar chzf ${PACKAGE}/sharp-libvips-${PLATFORM}.tar.gz \
+
+
+if [ "$LINUX" = true ]; then
+  tar chzf ${PACKAGE}/sharp-libvips-${PLATFORM}.tar.gz \
   --hard-dereference \
   include \
   lib \
   *.json \
   THIRD-PARTY-NOTICES.md
+elif [ "$DARWIN" = true ]; then
+  tar chzf ${PACKAGE}/sharp-libvips-${PLATFORM}.tar.gz \
+  include \
+  lib \
+  *.json \
+  THIRD-PARTY-NOTICES.md
+fi
 
 # Allow tarballs to be read outside container
 chmod 644 ${PACKAGE}/sharp-libvips-${PLATFORM}.tar.*
