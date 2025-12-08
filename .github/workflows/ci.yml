@@ -16,6 +16,7 @@ jobs:
         run: |
           echo "Error: This workflow should only run on version tags (refs/tags/v*)"
           exit 1
+  # FIXME enable this back
   #      - name: Check latest versions
   #        run: ./check-latest-versions.sh
   build:
