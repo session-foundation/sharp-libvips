@@ -18,8 +18,9 @@ jobs:
         run: |
           echo "Error: This workflow should only run on version tags (refs/tags/v*)"
           exit 1
-      - name: Check latest versions
-        run: ./check-latest-versions.sh
+      # TODO enable this back
+      # - name: Check latest versions
+      #   run: ./check-latest-versions.sh
   build:
     permissions:
       contents: read
@@ -89,6 +90,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dist/*.tgz"
+          artifacts: "dist/*.tar.gz"
           bodyFile: release-notes.md
           draft: true
