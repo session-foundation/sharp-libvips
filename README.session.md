@@ -54,9 +54,9 @@ The version doesn't have to match the official `sharp-libvips` version, but it s
 To build a new release through the CI, all you need to do is to
 
 - remove the existing release on github for that version (Note: make sure no official release of session is using it, otherwise create a new version)
-- change the release to be built by searching and replacing the current version in this project. For instance, search and replace `1.2.4` with `1.2.5`.
+- change the release to be built by searching and replacing the current version in this project. For instance, search and replace `1.2.5` with `1.2.6`.
 - remove the tag locally and remotely, and force push the changes (including the new tag)
-- `git tag -d v1.2.5; git tag v1.2.5 && git push foundation -f && git push foundation -f tags/v1.2.5`
+- `git tag -d v1.2.6; git tag v1.2.6 && git push foundation -f && git push foundation -f tags/v1.2.6`
 
 Note: the build needs a tag to generate a release, hence why you should delete and force push the tag each time you are iterating.
 
