@@ -21,7 +21,7 @@ We have removed some of the supported platforms and architectures from the offic
 - linux-ppc64le
 - linux-riscv64
 - linux-s390x
-- win32 that are not for x64
+- win32 that are not for x64 or arm64
 
 What we do support is:
 
@@ -30,6 +30,7 @@ What we do support is:
 - linux-x64
 - linux-arm64v8
 - win32-x64
+- win32-arm64
 
 **Note:**
 

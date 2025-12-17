@@ -57,7 +57,7 @@ PLATFORMS=$(ls platforms --ignore=win32*)
 for platform in $PLATFORMS; do
   extract "$platform"
 done
-for platform in x64; do
+for platform in arm64v8 x64; do
   extract "win32-$platform"
 done
 
